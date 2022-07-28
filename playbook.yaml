@@ -1,0 +1,27 @@
+---
+  - name: "installing & deploying simple web to raspberry pi"
+    hosts: local
+    tasks:
+    
+    - name: "installing packages on host"
+      apt:
+        name: apache2
+        state: latest
+   
+   - name: "Cloning web Project"
+     git:
+       repo: https://github.com/DevOps-Arts/site
+       dest: "/tmp"
+       clone: yes
+       update: yes
+   
+   - name: "Transfering Site project to /var/www/html/"
+     copy:
+       src: /tmp/site/index.html
+       dest: /var/www/html/
+       
+   - name: "Sarting the server on port (80)  !!!!!!!!!"
+     service:
+       name: apache2
+       state: restarted
+       enabled: yes
